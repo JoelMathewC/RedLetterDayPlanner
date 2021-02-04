@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:redletterday_planner/Database/UserDatabase.dart';
 
 class AuthServices{
 
@@ -15,6 +16,7 @@ class AuthServices{
   Future registerWithEmailAndPassword(String name,String email,String password) async {
     try{
       auth.UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await UserDatabase().createUserDocument(result.user.uid, name);
       return result.user;
     }catch(e){
       print(e.toString());
