@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:redletterday_planner/AuthenticationSystem/Wrapper.dart';
+import 'package:redletterday_planner/Screens/AddEventPage.dart';
 import 'package:redletterday_planner/Screens/Home.dart';
 import 'package:redletterday_planner/Screens/Loading.dart';
 import 'package:redletterday_planner/Sidebar/SidebarLayout.dart';
@@ -78,11 +79,14 @@ class _AppState extends State<App> {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         accentColor: Color(0xFF262AAA),
+        primaryColor: Colors.white,
+
       ),
       routes: {
         Wrapper.id: (context) => Wrapper(),
         Home.id: (context) => Home(),
         SidebarLayout.id: (context) => SidebarLayout(),
+        AddEventPage.id: (context) => AddEventPage(),
       },
     );
   }
