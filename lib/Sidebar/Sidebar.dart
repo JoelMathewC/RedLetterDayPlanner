@@ -15,7 +15,7 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin<Sidebar>{
   AnimationController _animationController;
-  final _animationDuration = Duration(microseconds: 500);
+  final _animationDuration = const Duration(milliseconds: 300);
 
   StreamController<bool> isSidebarOpenedStreamController;
   Stream<bool> isSidebarOpenedStream;
@@ -65,8 +65,8 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin<S
           duration: _animationDuration,
           top: 0, //Start from the top
           bottom: 0, //end at the bottom
-          left: isSidebarOpenedAsync.data ? 0 : -(screenWidth - 50) + 10,  // 0 or -(width - 50)
-          right: isSidebarOpenedAsync.data ? 0 : screenWidth - 60,// 0 or width + 50
+          left: isSidebarOpenedAsync.data ? 0 : -(screenWidth - 50)+10,  // 0 or -(width - 50)
+          right: isSidebarOpenedAsync.data ? 0 : screenWidth - 50,// 0 or width + 50
           child: Row(
             children: <Widget>[
               Container(
@@ -98,19 +98,19 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin<S
                       ),
                     ),
                     SizedBox(height: 70,),
-                    SidebarTabs(text: 'Home',screenWidth: screenWidth,unselectedIcon: Icons.home_outlined,selectedIcon: Icons.home,isSelected: true,onTap: (){
-                      onIconPressed();
+                    SidebarTabs(text: 'Home',screenWidth: screenWidth,unselectedIcon: Icons.home_outlined,selectedIcon: Icons.home,isSelected: BlocProvider.of<NavigationBloc>(context).state.toString() == 'Home',onTap: (){
                       BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
+                      onIconPressed();
                     },),
                     SizedBox(height: 10.0,),
-                    SidebarTabs(text: 'Marked Days',screenWidth: screenWidth,unselectedIcon: Icons.event_note_outlined,selectedIcon: Icons.event_note,isSelected: false,onTap: (){
-                      onIconPressed();
+                    SidebarTabs(text: 'Marked Days',screenWidth: screenWidth,unselectedIcon: Icons.event_note_outlined,selectedIcon: Icons.event_note,isSelected: BlocProvider.of<NavigationBloc>(context).state.toString() == 'EventsPage',onTap: (){
                       BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.EventsPageClickedEvent);
+                      onIconPressed();
                     },),
                     SizedBox(height: 10.0,),
-                    SidebarTabs(text: 'Weekly Schedule',screenWidth: screenWidth,unselectedIcon: Icons.schedule_outlined,selectedIcon: Icons.schedule,isSelected: false,onTap: (){
-                      onIconPressed();
+                    SidebarTabs(text: 'Weekly Schedule',screenWidth: screenWidth,unselectedIcon: Icons.schedule_outlined,selectedIcon: Icons.schedule,isSelected: BlocProvider.of<NavigationBloc>(context).state.toString() == 'WeeklySchedulePage',onTap: (){
                       BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.WeeklySchedulePageClickedEvent);
+                      onIconPressed();
                     },),
                     SizedBox(height: screenHeight - 500,),
                     GestureDetector(

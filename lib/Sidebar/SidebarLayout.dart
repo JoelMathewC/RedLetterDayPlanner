@@ -18,7 +18,7 @@ class SidebarLayout extends StatelessWidget {
                 return navigationState as Widget;
               }
             ),
-            Sidebar(name: 'Joel Mathew',),
+            Sidebar(name: 'Joel Mathew'),
           ],
         ),
       )
