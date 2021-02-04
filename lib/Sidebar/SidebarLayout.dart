@@ -11,7 +11,7 @@ class SidebarLayout extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Home(),
-          Sidebar(),
+          Sidebar(name: 'Joel Mathew',),
         ],
       ),
     );

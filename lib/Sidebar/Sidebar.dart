@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:redletterday_planner/AuthenticationSystem/Auth.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Sidebar extends StatefulWidget {
+  String name;
+  Sidebar({this.name});
   @override
   _SidebarState createState() => _SidebarState();
 }
@@ -68,6 +71,66 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin<S
                 color: Theme.of(context).accentColor,
                 height: screenHeight,
                 width: screenWidth - 50,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 100,),
+                    Center(
+                      child: Container(
+                        child: Text(widget.name + '\'s',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25.0,
+                        ),),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        child: Text('Dashboard',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),),
+                      ),
+                    ),
+                    SizedBox(height: 70,),
+                    SidebarTabs(text: 'Home',screenWidth: screenWidth,unselectedIcon: Icons.home_outlined,selectedIcon: Icons.home,isSelected: true,),
+                    SizedBox(height: 10.0,),
+                    SidebarTabs(text: 'Marked Days',screenWidth: screenWidth,unselectedIcon: Icons.event_note_outlined,selectedIcon: Icons.event_note,isSelected: false,),
+                    SizedBox(height: 10.0,),
+                    SidebarTabs(text: 'Weekly Schedule',screenWidth: screenWidth,unselectedIcon: Icons.schedule_outlined,selectedIcon: Icons.schedule,isSelected: false,),
+                    SizedBox(height: screenHeight - 500,),
+                    GestureDetector(
+                      onTap: () async {
+                        await AuthServices().signOut();
+                      },
+                      child: Center(
+                        child: Container(
+                          height: 50,
+                          width: screenWidth - 100,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0,0,0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.logout,
+                                  color: Colors.white,),
+                                SizedBox(width: 20,),
+                                Text("Logout",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               GestureDetector(
                 onTap: (){
@@ -128,3 +191,68 @@ class CustomMenuClipper extends CustomClipper<Path>{
   }
 
 }
+
+class SidebarTabs extends StatelessWidget {
+  String text;
+  double screenWidth;
+  IconData selectedIcon;
+  IconData unselectedIcon;
+  bool isSelected;
+  SidebarTabs({this.text,this.screenWidth,this.unselectedIcon,this.selectedIcon,this.isSelected});
+  @override
+  Widget build(BuildContext context) {
+    return isSelected ? Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        height: 50,
+        width: screenWidth - 100,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: <Widget>[
+              Icon(selectedIcon,
+                color: Theme.of(context).accentColor,),
+              SizedBox(width: 20,),
+              Text(text,
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),)
+            ],
+          ),
+        ),
+      ),
+    ) : Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        height: 50,
+        width: screenWidth - 100,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: <Widget>[
+              Icon(unselectedIcon,
+                color: Colors.white,),
+              SizedBox(width: 20,),
+              Text(text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
