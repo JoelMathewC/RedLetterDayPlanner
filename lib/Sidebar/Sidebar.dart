@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:redletterday_planner/AuthenticationSystem/Auth.dart';
+import 'package:redletterday_planner/Sidebar/NavigationBloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Sidebar extends StatefulWidget {
@@ -96,11 +98,20 @@ class _SidebarState extends State<Sidebar> with SingleTickerProviderStateMixin<S
                       ),
                     ),
                     SizedBox(height: 70,),
-                    SidebarTabs(text: 'Home',screenWidth: screenWidth,unselectedIcon: Icons.home_outlined,selectedIcon: Icons.home,isSelected: true,),
+                    SidebarTabs(text: 'Home',screenWidth: screenWidth,unselectedIcon: Icons.home_outlined,selectedIcon: Icons.home,isSelected: true,onTap: (){
+                      onIconPressed();
+                      BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
+                    },),
                     SizedBox(height: 10.0,),
-                    SidebarTabs(text: 'Marked Days',screenWidth: screenWidth,unselectedIcon: Icons.event_note_outlined,selectedIcon: Icons.event_note,isSelected: false,),
+                    SidebarTabs(text: 'Marked Days',screenWidth: screenWidth,unselectedIcon: Icons.event_note_outlined,selectedIcon: Icons.event_note,isSelected: false,onTap: (){
+                      onIconPressed();
+                      BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.EventsPageClickedEvent);
+                    },),
                     SizedBox(height: 10.0,),
-                    SidebarTabs(text: 'Weekly Schedule',screenWidth: screenWidth,unselectedIcon: Icons.schedule_outlined,selectedIcon: Icons.schedule,isSelected: false,),
+                    SidebarTabs(text: 'Weekly Schedule',screenWidth: screenWidth,unselectedIcon: Icons.schedule_outlined,selectedIcon: Icons.schedule,isSelected: false,onTap: (){
+                      onIconPressed();
+                      BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.WeeklySchedulePageClickedEvent);
+                    },),
                     SizedBox(height: screenHeight - 500,),
                     GestureDetector(
                       onTap: () async {
@@ -198,56 +209,61 @@ class SidebarTabs extends StatelessWidget {
   IconData selectedIcon;
   IconData unselectedIcon;
   bool isSelected;
-  SidebarTabs({this.text,this.screenWidth,this.unselectedIcon,this.selectedIcon,this.isSelected});
+  Function onTap;
+  SidebarTabs({this.text,this.screenWidth,this.unselectedIcon,this.selectedIcon,this.isSelected,this.onTap});
   @override
   Widget build(BuildContext context) {
-    return isSelected ? Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        height: 50,
-        width: screenWidth - 100,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-          child: Row(
-            children: <Widget>[
-              Icon(selectedIcon,
-                color: Theme.of(context).accentColor,),
-              SizedBox(width: 20,),
-              Text(text,
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),)
-            ],
+    return isSelected ? GestureDetector(
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          width: screenWidth - 100,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+            child: Row(
+              children: <Widget>[
+                Icon(selectedIcon,
+                  color: Theme.of(context).accentColor,),
+                SizedBox(width: 20,),
+                Text(text,
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold
+                  ),)
+              ],
+            ),
           ),
         ),
       ),
-    ) : Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        height: 50,
-        width: screenWidth - 100,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-          child: Row(
-            children: <Widget>[
-              Icon(unselectedIcon,
-                color: Colors.white,),
-              SizedBox(width: 20,),
-              Text(text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),)
-            ],
+    ) : GestureDetector(
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          width: screenWidth - 100,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+            child: Row(
+              children: <Widget>[
+                Icon(unselectedIcon,
+                  color: Colors.white,),
+                SizedBox(width: 20,),
+                Text(text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),)
+              ],
+            ),
           ),
         ),
       ),

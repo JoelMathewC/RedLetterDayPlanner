@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:redletterday_planner/AuthenticationSystem/Auth.dart';
+import 'package:redletterday_planner/Sidebar/NavigationBloc.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatefulWidget with NavigationStates{
   static String id = 'Home';
   @override
   _HomeState createState() => _HomeState();
@@ -11,7 +12,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.green,
 
     );
   }
