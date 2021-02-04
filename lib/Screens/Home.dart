@@ -10,16 +10,22 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: GestureDetector(
-        onTap: () async {
-          await AuthServices().signOut();
-        },
-        child: Container(
-          color: Colors.blue,
-        ),
-      ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
     );
   }
 }
+
+
+// Container(
+// color: Colors.red,
+// child: GestureDetector(
+// onTap: () async {
+// await AuthServices().signOut();
+// },
+// child: Container(
+// color: Colors.blue,
+// ),
+// ),
+// );

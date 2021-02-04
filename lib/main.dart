@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:redletterday_planner/AuthenticationSystem/Wrapper.dart';
 import 'package:redletterday_planner/Screens/Home.dart';
 import 'package:redletterday_planner/Screens/Loading.dart';
+import 'package:redletterday_planner/Sidebar/SidebarLayout.dart';
 
 
 
@@ -48,10 +49,6 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     // Show error message if initialization failed
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(0xff121212),
-        statusBarIconBrightness: Brightness.light
-    ));
 
 
     if (_error) {
@@ -79,14 +76,13 @@ class _AppState extends State<App> {
     return MaterialApp(
       initialRoute: Wrapper.id,
       theme: ThemeData(
-        canvasColor: Color(0xff121212), //grey base for dark mode
-        primaryColor: Colors.white,
-        accentColor: Color(0xff2f55d1),
-        primaryColorDark: Color(0xff1a1a1a),
+        scaffoldBackgroundColor: Colors.white,
+        accentColor: Color(0xFF262AAA),
       ),
       routes: {
         Wrapper.id: (context) => Wrapper(),
         Home.id: (context) => Home(),
+        SidebarLayout.id: (context) => SidebarLayout(),
       },
     );
   }

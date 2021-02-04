@@ -3,6 +3,7 @@ import 'package:redletterday_planner/AuthenticationSystem/Auth.dart';
 import 'package:redletterday_planner/Screens/Home.dart';
 import 'package:redletterday_planner/Screens/SignIn.dart';
 import 'package:redletterday_planner/Screens/SignUp.dart';
+import 'package:redletterday_planner/Sidebar/SidebarLayout.dart';
 
 class Wrapper extends StatefulWidget {
   static String id = 'Wrapper';
@@ -22,7 +23,7 @@ class _WrapperState extends State<Wrapper> {
       stream: AuthServices().user,
       builder: (context, user){
         if(user.hasData) {
-          return Home();
+          return SidebarLayout();
         }
         else {
           if(hasAccount)
